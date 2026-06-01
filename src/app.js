@@ -136,29 +136,29 @@ function shell(content) {
   const search = root.querySelector('#search');
   if (search) search.addEventListener('input', renderHomeCards);
 }
-function nav(c) { return `<button class="nav-button ${current===c.id?'active':''}" data-go="${c.id}">${icon(c.icon)}<span>${esc(c.title)}</span></button>`; }
+function nav(c) { return `<button class="nav-button ${current===c.id?'active':''}" data-go="${c.id}"><span>${esc(c.title)}</span></button>`; }
 function go(id) { current = id; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 function render() { if (current === 'home') renderHome(); else if (groups[current]) renderGroup(groups[current]); else renderTopic(topics[current]); }
 
 function renderHome() {
-  shell(`<section class="hero"><div class="hero-text"><p class="eyebrow">דף מנחה לעובדי שיקום ואיבה</p><h1>מפת זכאויות תיקון 47</h1><p class="hero-lead">בחרו אוכלוסייה וקבלו מיד: מה מגיע, מה לא מגיע, מה השתנה ומה הפעולה הבאה.</p><div class="hero-actions"><button class="primary" data-go="worker-actions">מה לבדוק עכשיו</button><button class="secondary" data-go="field-questions">שאלות מהשטח</button></div></div></section><section class="route-strip" aria-label="מבנה כל כרטיסייה"><span>כרטיס זהות</span><span>מפת זכויות</span><span>מה לא מגיע</span><span>מה השתנה</span><span>פעולה לעובד</span></section><section class="search-panel"><span class="search-mark">חיפוש</span><input id="search" placeholder="חיפוש מהיר: תל״א, אלמנה, 162, דיור, ילד נספה..." /></section><div id="home-cards"></div>`);
+  shell(`<section class="hero minimal-hero"><h1>מפת זכאויות תיקון 47</h1></section><section class="search-panel"><input id="search" placeholder="חיפוש לפי אוכלוסייה או זכאות" /></section><div id="home-cards"></div>`);
   renderHomeCards();
 }
 function renderHomeCards() {
   const q = (root.querySelector('#search')?.value || '').trim();
   const filt = a => !q || `${a.title} ${a.subtitle} ${a.hint}`.includes(q);
-  const card = c => `<button class="home-card" data-go="${c.id}"><span class="card-icon">${icons[c.icon]}</span><span class="home-card-body"><span class="home-card-title">${esc(c.title)}</span><span class="home-card-subtitle">${esc(c.subtitle)}</span><span class="home-card-hint">${esc(c.hint)}</span></span><span class="chev">‹</span></button>`;
-  root.querySelector('#home-cards').innerHTML = `<div class="section-title"><h2>כרטיסיות אוכלוסייה</h2><p>הכניסה הראשית — מתחילים מהאדם שמולנו</p></div><div class="card-grid population-grid">${navCards.filter(filt).map(card).join('')}</div><div class="section-title"><h2>נושאים רוחביים</h2><p>זכויות שחוזרות בכמה אוכלוסיות, שאלות ופעולות עבודה</p></div><div class="card-grid topic-grid">${topicCards.filter(filt).map(card).join('')}</div>`;
+  const card = c => `<button class="home-card" data-go="${c.id}"><span class="home-card-body"><span class="home-card-title">${esc(c.title)}</span><span class="home-card-hint">${esc(c.hint)}</span></span><span class="chev">‹</span></button>`;
+  root.querySelector('#home-cards').innerHTML = `<div class="section-title"><h2>אוכלוסיות</h2></div><div class="card-grid population-grid">${navCards.filter(filt).map(card).join('')}</div><div class="section-title"><h2>נושאים רוחביים</h2></div><div class="card-grid topic-grid">${topicCards.filter(filt).map(card).join('')}</div>`;
   root.querySelectorAll('#home-cards [data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
 }
-function pageHeader(title, iconName, kicker, text) { return `<header class="page-header"><div class="page-icon">${icons[iconName]}</div><div><p class="eyebrow">${esc(kicker)}</p><h1>${esc(title)}</h1><p>${esc(text)}</p></div></header>`; }
+function pageHeader(title, iconName, kicker, text) { return `<header class="page-header"><h1>${esc(title)}</h1>${text ? `<p>${esc(text)}</p>` : ''}</header>`; }
 function panel(title, marker, body, cls='plain') { return `<section class="info-panel ${cls}"><h3><span class="panel-mark">${esc(marker)}</span>${esc(title)}</h3>${body}</section>`; }
 function sectionTitle(title, sub='') { return `<div class="section-title"><h2>${esc(title)}</h2>${sub ? `<p>${esc(sub)}</p>` : ''}</div>`; }
 function renderGroup(g) {
-  const benefits = g.benefits.map(b => `<section class="benefit-card"><div class="benefit-icon">${icons[b[0]] || '•'}</div><h3>${esc(b[1])}</h3><p>${esc(b[2])}</p></section>`).join('');
-  const details = g.details?.length ? `<section class="section-block">${sectionTitle('פירוט והרחבות','המידע המלא שצריך להחזיק בתוך הכרטיסייה')}<div class="detail-grid">${g.details.map(d => panel(d[0],'פירוט',list(d[1]))).join('')}</div></section>` : '';
-  const links = `<section class="section-block">${sectionTitle('קישורים לנושאים רוחביים','כאן מרחיבים בלי להעמיס על הכרטיסייה')}<div class="linked-grid">${g.links.map(id => `<button class="linked-card" data-go="${id}"><span class="topic-mark">${icons[topics[id].icon]}</span><span>${esc(topics[id].title)}</span><span>‹</span></button>`).join('')}</div></section>`;
-  shell(`<article class="content-page">${pageHeader(g.title,g.icon,'כרטיסיית אוכלוסייה',g.oneLine)}<div class="level-two-layout">${panel('כרטיס זהות קצר — מי זה?','זהות',`<p>${esc(g.identity)}</p>`,'identity')}${panel('חשוב לדעת לפני הכל','חשוב',`<p>${esc(g.important)}</p>`,'important')}</div><section class="section-block">${sectionTitle('מפת הזכויות במבט ראשון','הבלוקים האלה לא מחליפים את הפירוט — הם נותנים לעובד תמונה מהירה בראש')}<div class="benefit-grid">${benefits}</div></section><div class="level-two-layout">${panel('מה לא מגיע / איפה נזהרים','לא',list(g.no),'no')}${panel('מה השתנה בתיקון 47','חדש',list(g.changes),'change')}</div><div class="level-two-layout">${panel('טעות נפוצה','טעות',`<p>${esc(g.mistake)}</p>`,'mistake')}${panel('פעולה לעובד השיקום','צעד',`<p>${esc(g.action)}</p>`,'action')}</div>${details}${links}</article>`);
+  const benefits = g.benefits.map((b, i) => `<section class="benefit-card"><span class="benefit-number">${String(i + 1).padStart(2, '0')}</span><h3>${esc(b[1])}</h3><p>${esc(b[2])}</p></section>`).join('');
+  const details = g.details?.length ? `<section class="section-block">${sectionTitle('פירוט והרחבות')}<div class="detail-grid">${g.details.map(d => panel(d[0],'פירוט',list(d[1]))).join('')}</div></section>` : '';
+  const links = `<section class="section-block">${sectionTitle('נושאים קשורים')}<div class="linked-grid">${g.links.map(id => `<button class="linked-card" data-go="${id}"><span class="topic-mark">${icons[topics[id].icon]}</span><span>${esc(topics[id].title)}</span><span>‹</span></button>`).join('')}</div></section>`;
+  shell(`<article class="content-page">${pageHeader(g.title,g.icon,'כרטיסיית אוכלוסייה',g.identity)}<section class="section-block">${sectionTitle('זכויות מרכזיות')}<div class="benefit-grid">${benefits}</div></section><div class="level-two-layout">${panel('מה לא מגיע / איפה נזהרים','לא',list(g.no),'no')}${panel('מה השתנה בתיקון 47','חדש',list(g.changes),'change')}</div><div class="level-two-layout">${panel('טעות נפוצה','טעות',`<p>${esc(g.mistake)}</p>`,'mistake')}${panel('פעולה לעובד השיקום','צעד',`<p>${esc(g.action)}</p>`,'action')}</div>${details}${links}</article>`);
 }
 function renderTopic(t) {
   const blocks = t.blocks?.length ? `<div class="detail-grid">${t.blocks.map(b => panel(b[0],'פירוט',list(b[1]))).join('')}</div>` : '';
