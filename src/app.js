@@ -1,6 +1,6 @@
 const icons = {
-  home: '🏠', child: '🌱', adult: '🧭', twoParents: '👥', notSelf: '🤝', widow: '💙', parents: '🕯️', siblings: '🫂', special: '⚠️',
-  therapy: '💚', tla: '⭐', housing: '🏡', distress: '🪙', change: '📢', action: '✅', qa: '❓', money: '₪', education: '📚', memorial: '🕯️', committee: '⚖️', work: '🧰', no: '🚫'
+  home: '47', child: '0–21', adult: '21+', twoParents: '2ה', notSelf: 'ליווי', widow: 'א/ה', parents: 'הורים', siblings: 'אחים', special: 'הגדרה',
+  therapy: '162', tla: 'תל״א', housing: 'דיור', distress: 'מצוקה', change: 'חדש', action: 'צעד', qa: 'שאלה', money: '₪', education: 'לימוד', memorial: 'אזכרה', committee: 'למ״ד', work: 'שיקום', no: 'לא'
 };
 
 const navCards = [
@@ -9,7 +9,7 @@ const navCards = [
   ['two-parent-orphans','twoParents','יתומים משני הורים','מסגרת מיוחדת','תגמול מוגדל, משפחה מלווה, מענקים והלוואות'],
   ['not-self-reliant','notSelf','יתום שאינו עומד ברשות עצמו','ללא מגבלת גיל','תגמול קבוע, ליווי אישי ובדיקת סטטוס במערכת'],
   ['widows','widow','אלמנות ואלמנים','משפחה שכולה','מענק שנת אבל, פעוטות, תל״א, דיור וזכויות רוחב'],
-  ['bereaved-parents','parents','הורים שכולים','🕯️','פעוטות, לימודי העשרה, 162 טיפולים, דיור ומעלון'],
+  ['bereaved-parents','parents','הורים שכולים','זכויות הורים','פעוטות, לימודי העשרה, 162 טיפולים, דיור ומעלון'],
   ['bereaved-siblings','siblings','אחים שכולים','זכויות ממוקדות','162 טיפולים וסיוע בהגעה לאזכרה לפי בקשה'],
   ['child-of-fallen','special','ילדו של נספה','הגדרה מיוחדת','כן: טיפולים ואזכרה. לא: תגמולים, תל״א, שיקום ומענקי דיור']
 ].map(toCard);
@@ -131,7 +131,7 @@ function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&
 function list(items) { return `<ul class="clean-list">${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`; }
 
 function shell(content) {
-  root.innerHTML = `<div class="app-shell"><aside class="sidebar"><button class="brand" data-go="home"><span class="brand-mark">🗺️</span><span><strong>מפת זכאויות</strong><small>תיקון 47</small></span></button><nav><p class="nav-label">אוכלוסיות</p>${navCards.map(nav).join('')}<p class="nav-label">נושאים רוחביים</p>${topicCards.slice(0,6).map(nav).join('')}</nav></aside><main class="main">${content}</main></div>`;
+  root.innerHTML = `<div class="app-shell"><aside class="sidebar"><button class="brand" data-go="home"><span class="brand-mark">47</span><span><strong>מפת זכאויות</strong><small>תיקון 47</small></span></button><nav><p class="nav-label">אוכלוסיות</p>${navCards.map(nav).join('')}<p class="nav-label">נושאים רוחביים</p>${topicCards.slice(0,6).map(nav).join('')}</nav></aside><main class="main">${content}</main></div>`;
   root.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
   const search = root.querySelector('#search');
   if (search) search.addEventListener('input', renderHomeCards);
@@ -141,7 +141,7 @@ function go(id) { current = id; render(); window.scrollTo({ top: 0, behavior: 's
 function render() { if (current === 'home') renderHome(); else if (groups[current]) renderGroup(groups[current]); else renderTopic(topics[current]); }
 
 function renderHome() {
-  shell(`<section class="hero"><div class="hero-text"><p class="eyebrow">דף מנחה לעובדי שיקום ואיבה</p><h1>תיקון 47 — להבין את מפת הזכאויות בלי ללכת לאיבוד במסמכים</h1><p class="hero-lead">בחרו אוכלוסייה, קבלו מפת זכויות במבט ראשון, ואז העמיקו: מה מגיע, מה לא מגיע, מה השתנה ומה הפעולה הנכונה לעובד השיקום.</p><div class="hero-actions"><button class="primary" data-go="worker-actions">✅ מה לבדוק עכשיו?</button><button class="secondary" data-go="field-questions">❓ שאלות מהשטח</button></div></div><div class="hero-card"><div class="route-title">🧭 איך קוראים כל כרטיסייה?</div><ol><li><strong>כרטיס זהות:</strong> מי עומד מולנו?</li><li><strong>מפת זכויות:</strong> הבלוקים שצריך לזכור.</li><li><strong>מה לא מגיע:</strong> מניעת טעויות.</li><li><strong>מה השתנה:</strong> תיקון 47 בפועל.</li><li><strong>פעולה לעובד:</strong> הצעד הבא.</li></ol></div></section><section class="search-panel">🔎<input id="search" placeholder="חיפוש מהיר: תל״א, אלמנה, 162, דיור, ילד נספה..." /></section><div id="home-cards"></div>`);
+  shell(`<section class="hero"><div class="hero-text"><p class="eyebrow">דף מנחה לעובדי שיקום ואיבה</p><h1>מפת זכאויות תיקון 47</h1><p class="hero-lead">בחרו אוכלוסייה וקבלו מיד: מה מגיע, מה לא מגיע, מה השתנה ומה הפעולה הבאה.</p><div class="hero-actions"><button class="primary" data-go="worker-actions">מה לבדוק עכשיו</button><button class="secondary" data-go="field-questions">שאלות מהשטח</button></div></div></section><section class="route-strip" aria-label="מבנה כל כרטיסייה"><span>כרטיס זהות</span><span>מפת זכויות</span><span>מה לא מגיע</span><span>מה השתנה</span><span>פעולה לעובד</span></section><section class="search-panel"><span class="search-mark">חיפוש</span><input id="search" placeholder="חיפוש מהיר: תל״א, אלמנה, 162, דיור, ילד נספה..." /></section><div id="home-cards"></div>`);
   renderHomeCards();
 }
 function renderHomeCards() {
@@ -152,17 +152,17 @@ function renderHomeCards() {
   root.querySelectorAll('#home-cards [data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
 }
 function pageHeader(title, iconName, kicker, text) { return `<header class="page-header"><div class="page-icon">${icons[iconName]}</div><div><p class="eyebrow">${esc(kicker)}</p><h1>${esc(title)}</h1><p>${esc(text)}</p></div></header>`; }
-function panel(title, emoji, body, cls='plain') { return `<section class="info-panel ${cls}"><h3>${emoji}${esc(title)}</h3>${body}</section>`; }
+function panel(title, marker, body, cls='plain') { return `<section class="info-panel ${cls}"><h3><span class="panel-mark">${esc(marker)}</span>${esc(title)}</h3>${body}</section>`; }
 function sectionTitle(title, sub='') { return `<div class="section-title"><h2>${esc(title)}</h2>${sub ? `<p>${esc(sub)}</p>` : ''}</div>`; }
 function renderGroup(g) {
   const benefits = g.benefits.map(b => `<section class="benefit-card"><div class="benefit-icon">${icons[b[0]] || '•'}</div><h3>${esc(b[1])}</h3><p>${esc(b[2])}</p></section>`).join('');
-  const details = g.details?.length ? `<section class="section-block">${sectionTitle('פירוט והרחבות','המידע המלא שצריך להחזיק בתוך הכרטיסייה')}<div class="detail-grid">${g.details.map(d => panel(d[0],'✅',list(d[1]))).join('')}</div></section>` : '';
-  const links = `<section class="section-block">${sectionTitle('קישורים לנושאים רוחביים','כאן מרחיבים בלי להעמיס על הכרטיסייה')}<div class="linked-grid">${g.links.map(id => `<button class="linked-card" data-go="${id}">${icons[topics[id].icon]}<span>${esc(topics[id].title)}</span><span>‹</span></button>`).join('')}</div></section>`;
-  shell(`<article class="content-page">${pageHeader(g.title,g.icon,'כרטיסיית אוכלוסייה',g.oneLine)}<div class="level-two-layout">${panel('כרטיס זהות קצר — מי זה?','📖',`<p>${esc(g.identity)}</p>`,'identity')}${panel('חשוב לדעת לפני הכל','⚠️',`<p>${esc(g.important)}</p>`,'important')}</div><section class="section-block">${sectionTitle('מפת הזכויות במבט ראשון','הבלוקים האלה לא מחליפים את הפירוט — הם נותנים לעובד תמונה מהירה בראש')}<div class="benefit-grid">${benefits}</div></section><div class="level-two-layout">${panel('מה לא מגיע / איפה נזהרים','🚫',list(g.no),'no')}${panel('מה השתנה בתיקון 47','📢',list(g.changes),'change')}</div><div class="level-two-layout">${panel('טעות נפוצה','⚠️',`<p>${esc(g.mistake)}</p>`,'mistake')}${panel('פעולה לעובד השיקום','✅',`<p>${esc(g.action)}</p>`,'action')}</div>${details}${links}</article>`);
+  const details = g.details?.length ? `<section class="section-block">${sectionTitle('פירוט והרחבות','המידע המלא שצריך להחזיק בתוך הכרטיסייה')}<div class="detail-grid">${g.details.map(d => panel(d[0],'פירוט',list(d[1]))).join('')}</div></section>` : '';
+  const links = `<section class="section-block">${sectionTitle('קישורים לנושאים רוחביים','כאן מרחיבים בלי להעמיס על הכרטיסייה')}<div class="linked-grid">${g.links.map(id => `<button class="linked-card" data-go="${id}"><span class="topic-mark">${icons[topics[id].icon]}</span><span>${esc(topics[id].title)}</span><span>‹</span></button>`).join('')}</div></section>`;
+  shell(`<article class="content-page">${pageHeader(g.title,g.icon,'כרטיסיית אוכלוסייה',g.oneLine)}<div class="level-two-layout">${panel('כרטיס זהות קצר — מי זה?','זהות',`<p>${esc(g.identity)}</p>`,'identity')}${panel('חשוב לדעת לפני הכל','חשוב',`<p>${esc(g.important)}</p>`,'important')}</div><section class="section-block">${sectionTitle('מפת הזכויות במבט ראשון','הבלוקים האלה לא מחליפים את הפירוט — הם נותנים לעובד תמונה מהירה בראש')}<div class="benefit-grid">${benefits}</div></section><div class="level-two-layout">${panel('מה לא מגיע / איפה נזהרים','לא',list(g.no),'no')}${panel('מה השתנה בתיקון 47','חדש',list(g.changes),'change')}</div><div class="level-two-layout">${panel('טעות נפוצה','טעות',`<p>${esc(g.mistake)}</p>`,'mistake')}${panel('פעולה לעובד השיקום','צעד',`<p>${esc(g.action)}</p>`,'action')}</div>${details}${links}</article>`);
 }
 function renderTopic(t) {
-  const blocks = t.blocks?.length ? `<div class="detail-grid">${t.blocks.map(b => panel(b[0],'✅',list(b[1]))).join('')}</div>` : '';
-  const qa = t.qa?.length ? `<section class="qa-section"><div class="qa-heading">❓<div><h2>אולי יש לנו תשובה לשאלה שלכם</h2><p>שאלות שעלו מהשטח, בניסוח קצר וישיר.</p></div></div><div class="qa-list">${t.qa.map(([q,a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>` : '';
+  const blocks = t.blocks?.length ? `<div class="detail-grid">${t.blocks.map(b => panel(b[0],'פירוט',list(b[1]))).join('')}</div>` : '';
+  const qa = t.qa?.length ? `<section class="qa-section"><div class="qa-heading"><span class="section-mark">?</span><div><h2>אולי יש לנו תשובה לשאלה שלכם</h2><p>שאלות שעלו מהשטח, בניסוח קצר וישיר.</p></div></div><div class="qa-list">${t.qa.map(([q,a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>` : '';
   shell(`<article class="content-page">${pageHeader(t.title,t.icon,'נושא רוחבי',t.intro)}${blocks}${qa}<section class="section-block"><button class="back-home" data-go="home">← חזרה לדף הבית</button></section></article>`);
 }
 render();
